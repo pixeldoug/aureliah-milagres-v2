@@ -1,10 +1,10 @@
 "use client";
 
+import { useEffect, useState, type RefObject } from "react";
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { artist } from "@/lib/content";
 import { ReachButton } from "@/components/ReachButton";
 import { useMenu } from "@/components/menu-context";
-import type { RefObject } from "react";
 
 const corner =
   "font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.65)]";
@@ -220,6 +220,61 @@ function MobileSplitChrome({
   );
 }
 
+const MOBILE_QUERY = "(max-width: 767px)";
+
+const DESKTOP_MEDIA = {
+  poster: "/video/hero-poster.jpg",
+  webm: "/video/hero.webm",
+  mp4: "/video/hero.mp4",
+} as const;
+
+const MOBILE_MEDIA = {
+  poster: "/video/hero-mobile-poster.jpg",
+  webm: "/video/hero-mobile.webm",
+  mp4: "/video/hero-mobile.mp4",
+} as const;
+
+function HeroVideo({ videoRef }: { videoRef: RefObject<HTMLVideoElement | null> }) {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || isMobile === null) return;
+    void video.play().catch(() => undefined);
+  }, [isMobile, videoRef]);
+
+  const media = isMobile ? MOBILE_MEDIA : DESKTOP_MEDIA;
+
+  return (
+    <video
+      ref={videoRef}
+      key={isMobile === null ? "pending" : isMobile ? "mobile" : "desktop"}
+      className="hero-video"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      poster={isMobile === null ? undefined : media.poster}
+    >
+      {isMobile !== null ? (
+        <>
+          <source src={media.webm} type="video/webm" />
+          <source src={media.mp4} type="video/mp4" />
+        </>
+      ) : null}
+    </video>
+  );
+}
+
 export function Hero({
   scrollProgress,
   videoRef,
@@ -242,19 +297,7 @@ export function Hero({
         >
           <div className="anim-ken-media hero-media absolute inset-0 flex origin-center items-center justify-center md:block md:origin-top">
             <div className="hero-video-frame overflow-hidden">
-              <video
-                ref={videoRef}
-                className="hero-video"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/video/hero-poster.jpg"
-              >
-                <source src="/video/hero.webm" type="video/webm" />
-                <source src="/video/hero.mp4" type="video/mp4" />
-              </video>
+              <HeroVideo videoRef={videoRef} />
             </div>
           </div>
         </motion.div>

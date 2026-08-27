@@ -91,15 +91,13 @@ body {
 
 @media (max-width: 767px) {
   .hero-video-frame {
-    height: 46svh !important;
-    width: calc(46svh * 1920 / 1012) !important;
-    max-width: none !important;
-    flex-shrink: 0;
-    overflow: hidden;
+    height: 98%;
+    width: 100%;
+    background: #1f2121 url("/video/hero-mobile-poster.jpg") center / cover no-repeat;
   }
 
   .hero-video {
-    object-position: 36% 48%;
+    object-position: center center;
   }
 
   .anim-ken-media {
