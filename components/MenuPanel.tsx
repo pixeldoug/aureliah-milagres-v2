@@ -149,12 +149,6 @@ function ContatoPanel() {
   return (
     <div className="space-y-8">
       <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/45">Contato</p>
-      <h3 className="font-display text-4xl font-semibold uppercase leading-[0.9] tracking-[-0.04em] md:text-5xl">
-        Contrate
-      </h3>
-      <p className="text-[15px] leading-relaxed text-white/65">
-        Valores, formação e disponibilidade por WhatsApp ou e-mail.
-      </p>
       <ul className="space-y-2 font-mono text-[11px] uppercase tracking-[0.14em] text-white/70">
         <li>
           <a href={`mailto:${artist.bookingEmail}`}>{artist.bookingEmail}</a>

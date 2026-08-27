@@ -45,7 +45,7 @@ export function Nav() {
   return (
     <>
       <div className="anim-up-nav pointer-events-none fixed inset-x-0 top-5 z-[80] flex justify-center px-4">
-        <div className="pointer-events-auto flex h-11 w-[min(100%,208px)] items-center justify-between rounded-[2px] bg-ink px-3.5 backdrop-blur-[5px]">
+        <div className="pointer-events-auto flex h-11 w-[min(100%,208px)] items-center justify-between rounded-[2px] bg-ink/40 px-3.5 backdrop-blur-md md:bg-ink md:backdrop-blur-[5px]">
           <button
             type="button"
             className="font-display text-[15px] font-semibold tracking-tight text-white"

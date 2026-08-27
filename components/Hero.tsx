@@ -9,8 +9,13 @@ import type { RefObject } from "react";
 const corner =
   "font-mono text-[10px] uppercase leading-relaxed tracking-[0.16em] text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.65)]";
 
-function Icon({ name }: { name: (typeof artist.socials)[number]["name"] }) {
-  const className = "h-3.5 w-3.5 shrink-0";
+function SocialIcon({
+  name,
+  className = "h-3.5 w-3.5 shrink-0",
+}: {
+  name: (typeof artist.socials)[number]["name"];
+  className?: string;
+}) {
   switch (name) {
     case "Instagram":
       return (
@@ -54,6 +59,167 @@ function HireButton() {
   return <ReachButton onClick={() => openPanel("contato")}>Contratar</ReachButton>;
 }
 
+function SlimHire() {
+  const { openPanel } = useMenu();
+  return (
+    <button
+      type="button"
+      onClick={() => openPanel("contato")}
+      className="inline-flex min-h-11 items-center gap-2 border border-white bg-white px-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink"
+    >
+      Contratar
+      <span aria-hidden>→</span>
+    </button>
+  );
+}
+
+function ListenChip() {
+  const { openPanel } = useMenu();
+  return (
+    <button
+      type="button"
+      onClick={() => openPanel("musica")}
+      className="inline-flex min-h-11 items-center gap-2 border border-white/35 bg-white/10 px-4 font-mono text-[10px] uppercase tracking-[0.18em] text-white backdrop-blur-sm"
+    >
+      <SocialIcon name="Spotify" className="h-4 w-4 shrink-0" />
+      Ouvir
+    </button>
+  );
+}
+
+function SocialIconButtons() {
+  return (
+    <ul className="flex">
+      {artist.socials.map((social) => (
+        <li key={social.name} className="flex-1">
+          <a
+            href={social.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={social.name}
+            className="grid h-12 w-full min-w-11 place-items-center text-white/85 transition-opacity hover:text-white"
+          >
+            <SocialIcon name={social.name} className="h-6 w-6 shrink-0" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function DesktopChrome({
+  contentOpacity,
+  contentY,
+  contentPointer,
+  reduceMotion,
+}: {
+  contentOpacity: MotionValue<number>;
+  contentY: MotionValue<number>;
+  contentPointer: MotionValue<"auto" | "none">;
+  reduceMotion: boolean | null;
+}) {
+  return (
+    <div className="relative z-10 hidden h-full flex-col justify-between px-5 py-8 md:flex md:px-8">
+      <div className="flex items-start justify-between gap-4 pt-16">
+        <p className={`anim-up ${corner}`}>Cantora + compositora.</p>
+        <p className={`anim-up text-right ${corner}`}>
+          Forró litorâneo
+          <br />
+          reggae + MPB
+        </p>
+      </div>
+
+      <motion.div
+        className="flex flex-1 items-center"
+        style={
+          reduceMotion
+            ? undefined
+            : { opacity: contentOpacity, y: contentY, pointerEvents: contentPointer }
+        }
+      >
+        <div className="anim-ken-late origin-left">
+          <h1 className="font-display text-[clamp(2.6rem,8vw,5.4rem)] font-semibold uppercase leading-[0.88] tracking-[-0.045em] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
+            <span className="block">Aureliah</span>
+            <span className="block">Milagres</span>
+          </h1>
+          <div className="mt-8">
+            <HireButton />
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="flex items-end justify-between gap-5"
+        style={reduceMotion ? undefined : { opacity: contentOpacity, pointerEvents: contentPointer }}
+      >
+        <ul className={`anim-up flex flex-wrap gap-x-5 gap-y-3 ${corner}`}>
+          {artist.socials.map((social) => (
+            <li key={social.name}>
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 transition-opacity hover:opacity-60"
+              >
+                <SocialIcon name={social.name} />
+                {social.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div className="anim-up w-full max-w-[22rem] overflow-hidden rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.45)]">
+          <iframe
+            title="Ouvir Aureliah Milagres no Spotify"
+            src="https://open.spotify.com/embed/artist/07BH1WsxplcXWxhB1oQs7t?utm_source=generator&theme=0"
+            width="100%"
+            height="152"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+            className="block rounded-xl border-0"
+          />
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+function MobileSplitChrome({
+  contentOpacity,
+  contentY,
+  contentPointer,
+  reduceMotion,
+}: {
+  contentOpacity: MotionValue<number>;
+  contentY: MotionValue<number>;
+  contentPointer: MotionValue<"auto" | "none">;
+  reduceMotion: boolean | null;
+}) {
+  return (
+    <motion.div
+      className="relative z-10 flex h-full flex-col justify-between px-5 py-8 md:hidden"
+      style={
+        reduceMotion ? undefined : { opacity: contentOpacity, y: contentY, pointerEvents: contentPointer }
+      }
+    >
+      <div className="anim-up pt-16">
+        <h1 className="font-display text-[clamp(1.65rem,7vw,2.15rem)] font-semibold uppercase leading-[0.88] tracking-[-0.045em] text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.5)]">
+          <span className="block">Aureliah</span>
+          <span className="block">Milagres</span>
+        </h1>
+        <p className={`mt-2.5 ${corner}`}>Cantora + compositora · forró litorâneo</p>
+      </div>
+
+      <div className="anim-up flex flex-col gap-3 pb-[max(0.25rem,env(safe-area-inset-bottom))]">
+        <div className="flex items-center gap-2">
+          <SlimHire />
+          <ListenChip />
+        </div>
+        <SocialIconButtons />
+      </div>
+    </motion.div>
+  );
+}
+
 export function Hero({
   scrollProgress,
   videoRef,
@@ -62,99 +228,54 @@ export function Hero({
   videoRef: RefObject<HTMLVideoElement | null>;
 }) {
   const reduceMotion = useReducedMotion();
-  const mediaY = useTransform(scrollProgress, [0, 1], ["0%", "7%"]);
-  const mediaScale = useTransform(scrollProgress, [0, 1], [1, 1.08]);
+  const mediaScale = useTransform(scrollProgress, [0, 1], [1, 1.22]);
   const contentOpacity = useTransform(scrollProgress, [0, 0.12], [1, 0]);
   const contentY = useTransform(scrollProgress, [0, 0.12], [0, -28]);
   const contentPointer = useTransform(contentOpacity, (v) => (v > 0.2 ? "auto" : "none"));
 
   return (
-    <section id="topo" className="sticky top-0 z-0 h-svh min-h-[640px] overflow-hidden bg-ink">
+    <section id="topo" className="sticky -top-px z-0 h-[calc(100svh+2px)] min-h-[640px] overflow-hidden bg-ink">
       <div className="absolute inset-0 overflow-hidden bg-ink">
         <motion.div
-          className="absolute inset-0 origin-top will-change-transform"
-          style={reduceMotion ? undefined : { y: mediaY, scale: mediaScale }}
+          className="hero-media-frame absolute inset-0 origin-center will-change-transform"
+          style={reduceMotion ? undefined : { scale: mediaScale }}
         >
-          <div className="anim-ken-media hero-media absolute inset-0 origin-top">
-            <video
-              ref={videoRef}
-              className="hero-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/video/hero-poster.png"
-            >
-              <source src="/video/hero.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </motion.div>
-        <div className="hero-grain" aria-hidden />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/35 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-ink/40 to-transparent" />
-      </div>
-
-      <div className="relative z-10 flex h-full flex-col justify-between px-5 py-8 md:px-8">
-        <div className="flex items-start justify-between gap-4 pt-16">
-          <p className={`anim-up ${corner}`}>Cantora + compositora.</p>
-          <p className={`anim-up text-right ${corner}`}>
-            Forró litorâneo
-            <br />
-            reggae + MPB
-          </p>
-        </div>
-
-        <motion.div
-          className="flex flex-1 items-center"
-          style={
-            reduceMotion
-              ? undefined
-              : { opacity: contentOpacity, y: contentY, pointerEvents: contentPointer }
-          }
-        >
-          <div className="anim-ken-late origin-left">
-            <h1 className="font-display text-[clamp(2.6rem,8vw,5.4rem)] font-semibold uppercase leading-[0.88] tracking-[-0.045em] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.45)]">
-              <span className="block">Aureliah</span>
-              <span className="block">Milagres</span>
-            </h1>
-            <div className="mt-8">
-              <HireButton />
+          <div className="anim-ken-media hero-media absolute inset-0 flex origin-center items-center justify-center md:block md:origin-top">
+            <div className="hero-video-frame overflow-hidden">
+              <video
+                ref={videoRef}
+                className="hero-video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/video/hero-poster.jpg"
+              >
+                <source src="/video/hero.webm" type="video/webm" />
+                <source src="/video/hero.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </motion.div>
-
-        <motion.div
-          className="flex flex-col-reverse items-stretch justify-between gap-5 sm:flex-row sm:items-end"
-          style={reduceMotion ? undefined : { opacity: contentOpacity, pointerEvents: contentPointer }}
-        >
-          <ul className={`anim-up flex flex-wrap gap-x-5 gap-y-3 ${corner}`}>
-            {artist.socials.map((social) => (
-              <li key={social.name}>
-                <a
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 transition-opacity hover:opacity-60"
-                >
-                  <Icon name={social.name} />
-                  {social.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div className="anim-up w-full max-w-[22rem] overflow-hidden rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.45)] sm:ml-auto">
-            <iframe
-              title="Ouvir Aureliah Milagres no Spotify"
-              src="https://open.spotify.com/embed/artist/07BH1WsxplcXWxhB1oQs7t?utm_source=generator&theme=0"
-              width="100%"
-              height="152"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              className="block rounded-xl border-0"
-            />
-          </div>
-        </motion.div>
+        <div className="hero-grain" aria-hidden />
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-ink/80 via-ink/35 to-transparent md:block" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(31,33,33,0.42)_0%,transparent_22%,transparent_62%,rgba(31,33,33,0.72)_100%)] md:hidden" />
+        <div className="absolute inset-x-0 bottom-0 hidden h-36 bg-gradient-to-t from-ink/40 to-transparent md:block" />
       </div>
+
+      <DesktopChrome
+        contentOpacity={contentOpacity}
+        contentY={contentY}
+        contentPointer={contentPointer}
+        reduceMotion={reduceMotion}
+      />
+      <MobileSplitChrome
+        contentOpacity={contentOpacity}
+        contentY={contentY}
+        contentPointer={contentPointer}
+        reduceMotion={reduceMotion}
+      />
     </section>
   );
 }

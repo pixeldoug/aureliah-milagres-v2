@@ -76,12 +76,35 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+.hero-video-frame {
+  height: 100%;
+  width: 100%;
+}
+
 .hero-video {
   display: block;
   height: 100%;
   width: 100%;
   object-fit: cover;
   object-position: center top;
+}
+
+@media (max-width: 767px) {
+  .hero-video-frame {
+    height: 46svh !important;
+    width: calc(46svh * 1920 / 1012) !important;
+    max-width: none !important;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .hero-video {
+    object-position: 36% 48%;
+  }
+
+  .anim-ken-media {
+    animation-name: ken-burns-media-mobile;
+  }
 }
 
 @keyframes ken-burns {
@@ -99,6 +122,17 @@ body {
   from {
     opacity: 0;
     transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ken-burns-media-mobile {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
   }
   to {
     opacity: 1;

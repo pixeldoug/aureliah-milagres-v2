@@ -167,8 +167,7 @@ export function ReededSectionBg({
   const clipRef = useRef<HTMLDivElement>(null);
   const lockRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
-  const mediaY = useTransform(scrollProgress, [0, 1], ["0%", "7%"]);
-  const mediaScale = useTransform(scrollProgress, [0, 1], [1, 1.08]);
+  const mediaScale = useTransform(scrollProgress, [0, 1], [1, 1.22]);
 
   const align = () => {
     const clip = clipRef.current;
@@ -187,10 +186,10 @@ export function ReededSectionBg({
 
   return (
     <div ref={clipRef} className="pointer-events-none absolute inset-0 overflow-hidden [clip-path:inset(0)]" aria-hidden>
-      <div ref={lockRef} className="absolute top-0 left-0 h-svh w-full overflow-hidden will-change-transform">
+      <div ref={lockRef} className="absolute -top-px left-0 h-[calc(100svh+2px)] w-full overflow-hidden will-change-transform">
         <motion.div
-          className="absolute inset-0 origin-top"
-          style={reduceMotion ? undefined : { y: mediaY, scale: mediaScale }}
+          className="absolute inset-0 origin-center"
+          style={reduceMotion ? undefined : { scale: mediaScale }}
         >
           <ReededGlass videoRef={videoRef} />
         </motion.div>

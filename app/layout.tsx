@@ -40,20 +40,11 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     type: "website",
     url: "https://aureliahmilagres.com.br",
-    images: [
-      {
-        url: "/images/aureliah-milagres.webp",
-        width: 1200,
-        height: 679,
-        alt: "Aureliah Milagres",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: artist.name,
     description,
-    images: ["/images/aureliah-milagres.webp"],
   },
 };
 
