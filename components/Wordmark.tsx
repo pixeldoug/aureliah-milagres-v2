@@ -13,6 +13,21 @@ const links: { id: PanelId; label: string }[] = [
   { id: "contato", label: "Contato" },
 ];
 
+function MetaLines({ className }: { className?: string }) {
+  return (
+    <div
+      className={`flex items-start justify-between gap-6 font-mono text-[10px] uppercase tracking-[0.16em] text-white/80 drop-shadow-[0_1px_10px_rgba(0,0,0,0.55)] ${className ?? ""}`}
+    >
+      <p className="max-w-[14rem]">Artista independente.</p>
+      <p className="max-w-[14rem] text-right">
+        Ao vivo + autoral
+        <br />
+        Shows + eventos.
+      </p>
+    </div>
+  );
+}
+
 export function Wordmark({
   videoRef,
   scrollProgress,
@@ -30,14 +45,7 @@ export function Wordmark({
       <ReededSectionBg videoRef={videoRef} scrollProgress={scrollProgress} />
 
       <div className="relative z-[1] flex min-h-0 flex-1 flex-col">
-        <div className="flex items-start justify-between gap-6 font-mono text-[10px] uppercase tracking-[0.16em] text-white/80 drop-shadow-[0_1px_10px_rgba(0,0,0,0.55)]">
-          <p className="max-w-[14rem]">Artista independente.</p>
-          <p className="max-w-[14rem] text-right">
-            Ao vivo + autoral
-            <br />
-            Shows + eventos.
-          </p>
-        </div>
+        <MetaLines className="hidden md:flex" />
 
         <div className="flex flex-1 flex-col items-center justify-center py-10 text-center">
           <h2 className="font-display w-full text-[clamp(3.2rem,14vw,11.5rem)] font-semibold uppercase leading-[0.78] tracking-[-0.07em] text-white drop-shadow-[0_10px_36px_rgba(0,0,0,0.55)]">
@@ -67,6 +75,8 @@ export function Wordmark({
             ))}
           </ul>
         </div>
+
+        <MetaLines className="mt-auto md:hidden" />
       </div>
     </section>
   );
